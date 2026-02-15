@@ -122,7 +122,7 @@ public class NativePluginLoader
 
             var pluginInfo = NativePluginInfo.Loaded(binary, handle);
 
-            Plugin.Log.Info($"Successfully loaded native plugin: {pluginInfo.Name} (handle: 0x{handle:X})");
+            Plugin.Log.Info($"Successfully loaded native plugin: {pluginInfo.Id} (handle: 0x{handle:X})");
             return pluginInfo;
         }
         catch (Exception ex)
@@ -142,7 +142,7 @@ public class NativePluginLoader
     public NativePluginInfo? GetPluginByName(string name)
     {
         return _pluginInfos.FirstOrDefault(p =>
-            p.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            p.Id.Equals(name, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>
@@ -181,7 +181,7 @@ public class NativePluginLoader
             if (plugin.LibraryHandle != IntPtr.Zero)
             {
                 bool success = NativeLoaderHelper.UnloadNativeLibrary(plugin.LibraryHandle);
-                Plugin.Log.Debug($"Unloaded {plugin.Name}: {(success ? "Success" : "Failed")}");
+                Plugin.Log.Debug($"Unloaded {plugin.Id}: {(success ? "Success" : "Failed")}");
             }
         }
 

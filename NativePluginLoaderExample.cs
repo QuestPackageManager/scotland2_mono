@@ -35,13 +35,13 @@ public static class NativePluginLoaderExample
         // Iterate through all loaded plugins
         foreach (var pluginInfo in loader.GetLoadedPlugins())
         {
-            Plugin.Log.Info($"  - {pluginInfo.Name} (Handle: 0x{pluginInfo.LibraryHandle:X})");
+            Plugin.Log.Info($"  - {pluginInfo.Id} (Handle: 0x{pluginInfo.LibraryHandle:X})");
         }
 
         // Check for failed plugins
         foreach (var pluginInfo in loader.GetFailedPlugins())
         {
-            Plugin.Log.Warn($"  - Failed: {pluginInfo.Name} - {pluginInfo.ErrorMessage}");
+            Plugin.Log.Warn($"  - Failed: {pluginInfo.Id} - {pluginInfo.ErrorMessage}");
         }
 
         // Get a specific plugin by name
@@ -178,8 +178,8 @@ public static class NativePluginLoaderExample
             if (plugin.Dependencies!.Count > 0)
             {
                 var pluginDeps = plugin.Dependencies
-                    .Select(d => Path.GetFileNameWithoutExtension(d))
-                    .Where(d => loadedPlugins.Any(p => p.Name.Equals(d, StringComparison.OrdinalIgnoreCase)))
+                    .Select(Path.GetFileNameWithoutExtension)
+                    .Where(d => loadedPlugins.Any(p => p.Id.Equals(d, StringComparison.OrdinalIgnoreCase)))
                     .ToArray();
                 
                 if (pluginDeps.Any())
@@ -193,7 +193,7 @@ public static class NativePluginLoaderExample
         // This ensures dependencies are initialized before dependents
         foreach (var plugin in sortedPlugins)
         {
-            Plugin.Log.Debug($"Initializing plugin: {plugin.Name}");
+            Plugin.Log.Debug($"Initializing plugin: {Path.GetFileName(plugin.FilePath)}");
             // Call initialization code here
             // plugin.CallSetup(); // or whatever your initialization method is
         }

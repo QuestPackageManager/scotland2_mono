@@ -16,6 +16,7 @@ internal class Plugin
     internal static IpaLogger Log { get; private set; } = null!;
 
     private readonly NativePluginLoader _nativeLoader = new();
+    private readonly NativePluginLoader _pluginLoader = new();
     
     private readonly string _pluginDirectory;
     private readonly string _libraryDirectory;
@@ -45,7 +46,7 @@ internal class Plugin
     public void OnApplicationStart()
     {
         Log.Info($"Loading plugins {_pluginDirectory}");
-        _nativeLoader.LoadPlugins(_libraryDirectory);
+        _pluginLoader.LoadPlugins(_libraryDirectory);
         CallSetup();
     }
 
@@ -66,7 +67,7 @@ internal class Plugin
 
     private void CallSetup()
     {
-        foreach (var plugin in _nativeLoader.PluginInfos)
+        foreach (var plugin in _pluginLoader.PluginInfos)
         {
             plugin.CallSetup();
         }
@@ -74,7 +75,7 @@ internal class Plugin
     
     private void CallLoad()
     {
-        foreach (var plugin in _nativeLoader.PluginInfos)
+        foreach (var plugin in _pluginLoader.PluginInfos)
         {
             plugin.CallLoad();
         }
@@ -82,7 +83,7 @@ internal class Plugin
     
     private void CallLateLoad()
     {
-        foreach (var plugin in _nativeLoader.PluginInfos)
+        foreach (var plugin in _pluginLoader.PluginInfos)
         {
             plugin.CallLateLoad();
         }
