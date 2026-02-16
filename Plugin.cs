@@ -46,7 +46,7 @@ internal class Plugin
     public void OnApplicationStart()
     {
         Log.Info($"Loading plugins {_pluginDirectory}");
-        _pluginLoader.LoadPlugins(_libraryDirectory);
+        _pluginLoader.LoadPlugins(_pluginDirectory);
         CallSetup();
     }
 
