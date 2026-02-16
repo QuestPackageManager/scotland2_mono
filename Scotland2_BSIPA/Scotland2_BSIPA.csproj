@@ -52,7 +52,7 @@
     
     <ItemGroup>
       <ProjectReference Include="../Scotland2_Mono/Scotland2_Mono.csproj">
-          <SetTargetFramework>net48</SetTargetFramework>
+          <SetTargetFramework>TargetFramework=net48</SetTargetFramework>
       </ProjectReference>
     </ItemGroup>
 
