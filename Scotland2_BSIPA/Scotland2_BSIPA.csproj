@@ -28,6 +28,21 @@
         <None Include="Scotland2_BSIPA.csproj.user" Condition="Exists('Scotland2_BSIPA.csproj.user')"/>
     </ItemGroup>
 
+    <Target Name="Run ILRepack" AfterTargets="Build">
+        <Exec Command="dotnet tool run ilrepack \
+            &quot;$(TargetPath)&quot; \
+            &quot;$(TargetDir)/Scotland2_Mono.dll&quot; \
+            &quot;/out:$(TargetDir)/Scotland2.dll&quot; \
+            &quot;/lib:$(BeatSaberDir)/Libs&quot; \
+            &quot;/lib:$(BeatSaberDir)/IPA/Data/Managed&quot; \
+            &quot;/lib:$(BeatSaberDir)/Beat Saber_Data/Managed&quot; \
+            &quot;/lib:$(TargetDir)&quot;"/>
+    </Target>
+
+    <Target Name="Copy Assembly" AfterTargets="Run ILRepack">
+        <Copy SourceFiles="$(TargetDir)/Scotland2.dll;$(TargetDir)/Scotland2.pdb" DestinationFolder="$(BeatSaberDir)/Plugins"/>
+    </Target>
+
 
     
     <ItemGroup>
